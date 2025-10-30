@@ -1,8 +1,8 @@
-<%@ page import="java.sql.*" %>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
-    <title>Student Data</title>
+    <title>Student List</title>
     <style>
         body { font-family: Arial, sans-serif; background-color: #f4f4f4; }
         table { border-collapse: collapse; width: 70%; margin: 30px auto; background: #fff; }
@@ -14,31 +14,6 @@
 <body>
     <h2>Student List</h2>
 
-    <%
-        // JDBC connection variables
-        String jdbcURL = "jdbc:postgres://localhost:5432/studentmanagmentsystem";
-        String dbUser = "postgres";
-        String dbPassword = "root";
-
-        Connection connection = null;
-        Statement statement = null;
-        ResultSet resultSet = null;
-
-        try {
-            // Load JDBC driver
-            Class.forName("org.postgres.Driver");
-
-            // Establish connection
-            connection = DriverManager.getConnection(jdbcURL, dbUser, dbPassword);
-
-            // Create SQL query
-            String sql = "SELECT * FROM student";
-
-            // Execute query
-            statement = connection.createStatement();
-            resultSet = statement.executeQuery(sql);
-    %>
-
     <table>
         <tr>
             <th>ID</th>
@@ -47,31 +22,16 @@
             <th>Grade</th>
         </tr>
 
-        <%
-            // Loop through the result set
-            while (resultSet.next()) {
-        %>
+        <c:forEach var="student" items="${student}">
             <tr>
-                <td><%= resultSet.getInt("id") %></td>
-                <td><%= resultSet.getString("name") %></td>
-                <td><%= resultSet.getInt("age") %></td>
-                <td><%= resultSet.getString("grade") %></td>
+                <td>${student.id}</td>
+                <td>${student.name}</td>
+                <td>${student.age}</td>
+                <td>${student.gender}</td>
+                <td>${student.email}</td>
+                <td>${student.phoneNumber}</td>
             </tr>
-        <%
-            }
-        %>
+        </c:forEach>
     </table>
-
-    <%
-        } catch (Exception e) {
-            out.println("<p style='color:red;text-align:center;'>Error: " + e.getMessage() + "</p>");
-        } finally {
-            // Close resources
-            if (resultSet != null) try { resultSet.close(); } catch (SQLException ignore) {}
-            if (statement != null) try { statement.close(); } catch (SQLException ignore) {}
-            if (connection != null) try { connection.close(); } catch (SQLException ignore) {}
-        }
-    %>
-
 </body>
 </html>
