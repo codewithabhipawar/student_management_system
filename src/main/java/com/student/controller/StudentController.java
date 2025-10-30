@@ -46,6 +46,12 @@ public class StudentController {
 //		return stdService.getStudents();
 		return ResponseEntity.of(Optional.of(stdService.getStudents()));
 	}
+
+	@GetMapping("/stud")
+	public String getStudents()
+	{
+		return "student.jsp";
+	}
 	
 	//post mapping
 	@PostMapping("/students")

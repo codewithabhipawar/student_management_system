@@ -16,9 +16,9 @@
 
     <%
         // JDBC connection variables
-        String jdbcURL = "jdbc:mysql://localhost:3306/school";
-        String dbUser = "root";
-        String dbPassword = "your_password_here";
+        String jdbcURL = "jdbc:postgres://localhost:5432/studentmanagmentsystem";
+        String dbUser = "postgres";
+        String dbPassword = "root";
 
         Connection connection = null;
         Statement statement = null;
@@ -26,13 +26,13 @@
 
         try {
             // Load JDBC driver
-            Class.forName("com.mysql.cj.jdbc.Driver");
+            Class.forName("org.postgres.Driver");
 
             // Establish connection
             connection = DriverManager.getConnection(jdbcURL, dbUser, dbPassword);
 
             // Create SQL query
-            String sql = "SELECT * FROM students";
+            String sql = "SELECT * FROM student";
 
             // Execute query
             statement = connection.createStatement();
